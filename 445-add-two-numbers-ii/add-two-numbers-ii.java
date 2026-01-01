@@ -4,7 +4,8 @@ class Solution {
         ListNode t2 = reverse(l2);
 
         int carry = 0;
-        ListNode head = null;
+        ListNode dummy=new ListNode(-1);
+        ListNode head = dummy;
 
         while (t1 != null || t2 != null || carry != 0) {
             int sum = carry;
@@ -22,11 +23,11 @@ class Solution {
             carry = sum / 10;
             ListNode node = new ListNode(sum % 10);
 
-            node.next = head;
-            head = node;
+            head.next = node;
+            head = head.next;
         }
 
-        return head;
+        return reverse(dummy.next);
     }
 
     private ListNode reverse(ListNode head) {
