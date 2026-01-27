@@ -17,7 +17,6 @@ class Solution {
                 }
             }
 
-            // remove the pair
             list.remove(idx);
             list.remove(idx);
             list.add(idx, minSum);
