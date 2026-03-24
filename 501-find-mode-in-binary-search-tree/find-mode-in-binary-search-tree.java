@@ -14,31 +14,41 @@
  * }
  */
 class Solution {
-    Map<Integer,Integer> map = new HashMap<>();
+    int c = 0;
+    int max = 0;
+    Integer prev = null;
+    List<Integer> ans = new ArrayList<>();
+
     public int[] findMode(TreeNode root) {
-        solve(root);
-        int max = Integer.MIN_VALUE;
-        int c=0;
-        for(int i : map.values()){
-            max=Math.max(max,i);
-        }
-        for(int i : map.values()){
-            if(i==max) c++; 
-        }
-        int j=0;
-        int[] arr = new int[c];
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()){
-            if(entry.getValue()==max){
-                arr[j++]=entry.getKey();
-            }
+        inorder(root);
+        
+        int[] arr = new int[ans.size()];
+        for (int i = 0; i < ans.size(); i++) {
+            arr[i] = ans.get(i);
         }
         return arr;
-
     }
-    private void solve(TreeNode root){
-        if(root==null) return ;
-        solve(root.left);
-        map.put(root.val,map.getOrDefault(root.val,0)+1);
-        solve(root.right);
+
+    private void inorder(TreeNode root) {
+        if (root == null) return;
+        inorder(root.left);
+
+        if (prev != null && root.val == prev) {
+            c++;
+        } else {
+            c = 1;
+        }
+
+        if (c > max) {
+            max = c;
+            ans.clear();
+            ans.add(root.val);
+        } 
+        else if (c == max) {
+            ans.add(root.val);
+        }
+
+        prev = root.val;
+        inorder(root.right);
     }
 }
