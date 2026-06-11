@@ -1,26 +1,29 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        Integer dp[][] = new Integer[10001][coins.length+1];
-        int a= solve(coins, amount, coins.length - 1,dp);
-        return a==Integer.MAX_VALUE?-1:a;
+        Integer[][] dp = new Integer[amount + 1][coins.length];
+
+        int ans = solve(coins, amount, coins.length - 1, dp);
+        return ans == Integer.MAX_VALUE ? -1 : ans;
     }
 
-    private int solve(int[] coins, int amount, int i,Integer dp[][]) {
+    private int solve(int[] coins, int amount, int i, Integer[][] dp) {
+
         if (i == 0) {
-            if (amount % coins[0] == 0) {
+            if (amount % coins[0] == 0)
                 return amount / coins[0];
-            } else {
-                return Integer.MAX_VALUE;
-            }
+            return Integer.MAX_VALUE;
         }
-        if(dp[amount][i]!=null) return dp[amount][i];
-        int ntake = 0 + solve(coins, amount, i - 1,dp);
+        if (dp[amount][i] != null)
+            return dp[amount][i];
+
+        int notTake = solve(coins, amount, i - 1, dp);
         int take = Integer.MAX_VALUE;
         if (coins[i] <= amount) {
-            int a = solve(coins, amount - coins[i], i,dp);
-            if (a != Integer.MAX_VALUE)
-                take = 1 + a;
+        int res = solve(coins, amount - coins[i], i, dp);
+            if (res != Integer.MAX_VALUE) {
+                take = 1 + res;
+            }
         }
-        return dp[amount][i]=Math.min(take, ntake);
+        return dp[amount][i] = Math.min(take, notTake);
     }
 }
