@@ -7,13 +7,12 @@ class Solution {
         if(i==arr.length) return 0;
         if(c==0) return 0;
         if(dp[i][buy][c]!=null) return dp[i][buy][c];
-        int profit=0;
         if(buy==1){
-            profit= Math.max(-arr[i]+solve(i+1,arr,0,dp,c),0+solve(i+1,arr,1,dp,c));
+            dp[i][buy][c]= Math.max(-arr[i]+solve(i+1,arr,0,dp,c),0+solve(i+1,arr,1,dp,c));
         }
         else{
-            profit=Math.max(arr[i]+solve(i+1,arr,1,dp,c-1),0+solve(i+1,arr,0,dp,c));
+            dp[i][buy][c]=Math.max(arr[i]+solve(i+1,arr,1,dp,c-1),0+solve(i+1,arr,0,dp,c));
         }
-        return dp[i][buy][c]=profit;
+        return dp[i][buy][c];
     }
 }
