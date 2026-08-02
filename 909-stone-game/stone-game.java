@@ -2,7 +2,7 @@ class Solution {
     public boolean stoneGame(int[] piles) {
         int n = piles.length;
         Integer[][] dp = new Integer[n][n];
-        return solve(piles, 0, n - 1, dp) > 0;
+        return solve(piles, 0, n - 1, dp)>=0;
     }
 
     private int solve(int[] piles, int i, int j, Integer[][] dp) {
